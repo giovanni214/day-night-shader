@@ -4,17 +4,12 @@
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)
 
-This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
-
 This project is a backend service that provides a powerful image rendering API. It takes a latitude and longitude representing the subsolar point (where the sun is directly overhead) and uses a custom GLSL shader to render a high-quality equirectangular map of the Earth. The final image accurately visualizes the terminator line, separating day from night, and includes distinct lines for civil, nautical, and astronomical twilight.
-The application is architected for high-throughput and responsiveness by offloading all GPU-intensive rendering to a separate thread, ensuring the web server's event loop is never blocked.
-This repository contains two parallel, fully functional implementations, giving users a choice of technology stack:
 
-Rust Version (main branch): Built with Rust, Hyper, and SFML. It leverages Rust's performance and safety, using a virtual framebuffer (Xvfb) in Docker for headless rendering.
-Node.js Version (node branch): Built with Node.js, Express, and the gl library. It uses a worker thread and provides true headless rendering via native OpenGL/EGL without needing a virtual display.
+This version is built with Node.js, using the Express web server and the `gl` library for native OpenGL graphics. It is architected for high-throughput by offloading all GPU-intensive rendering to a separate worker thread, ensuring the web server's event loop is never blocked.
 
 > **Looking for the original Rust/SFML version?**
-> This implementation is available on the [`rust` branch](https://github.com/giovanni214/day-night-shader/tree/rust).
+> This implementation is available on the [`main` branch](https://github.com/giovanni214/day-night-shader/tree/main).
 
 ---
 
@@ -37,7 +32,7 @@ Before you begin, you will need the following installed on your system:
 
 ### 2. Installation
 
-First, clone the repository and switch to the `node` branch.
+First, clone the repository and install the required NPM packages.
 
 ```bash
 # Clone the entire repository
@@ -48,11 +43,8 @@ cd day-night-shader
 
 # IMPORTANT: Switch to the Node.js version
 git checkout node
-```
 
-Next, install the required NPM packages.
-
-```bash
+# Install all Node.js dependencies
 npm install
 ```
 
@@ -114,6 +106,11 @@ This command runs the server and maps your local port 3000 to the container's po
 ```bash
 docker run --rm -it -p 3000:3000 day-night-shader-node
 ```
+-   `--rm`: Automatically removes the container when it stops.
+-   `-it`: Runs in interactive mode so you can see logs and stop with `Ctrl+C`.
+-   `-p 3000:3000`: Maps the host port to the container port.
+
+The container will start the application listening on `0.0.0.0:3000` by default.
 
 ---
 
