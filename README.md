@@ -2,29 +2,20 @@
 
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?style=for-the-badge&logo=nodedotjs)
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express)
-![OpenGL](https://img.shields.io/badge/OpenGL-Headless-992A2A?style=for-the-badge&logo=opengl)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)
 
-This project provides a high-performance HTTP API that renders a world map with a day/night terminator line based on a given sun position (latitude and longitude). This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
+This project provides a high-performance HTTP API that renders a world map with a day/night terminator line based on a given sun position. This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
 
 > **Looking for the original Rust/SFML version?**
-> This implementation is available on the [main branch](https://github.com/giovanni214/day-night-shader/tree/rust).
+> This implementation is available on the [`rust` branch](https://github.com/giovanni214/day-night-shader/tree/rust).
 
 ---
 
-## Features
-
--   **High-Performance:** Uses a dedicated worker thread for GPU rendering to keep the API responsive.
--   **Native Rendering:** Leverages native OpenGL via the `gl` package for true headless rendering without a display server (no Xvfb needed).
--   **Configurable:** Set port, render width, and debug mode via command-line arguments.
--   **Dockerized:** Includes a multi-stage `Dockerfile` for easy, lightweight, and portable deployment.
-
----
-
-## Getting Started
+## Local Installation & Usage
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
+### 1. Prerequisites
 
 Before you begin, you will need the following installed on your system:
 
@@ -36,66 +27,43 @@ Before you begin, you will need the following installed on your system:
         sudo apt-get update
         sudo apt-get install -y build-essential pkg-config python-is-python3
         ```
-    -   Linux is only supported due to the use of the `gl` library
 
-### Installation
+### 2. Installation
 
-1.  **Clone the Node.js branch of the repository:**
-    ```bash
-    # Clone the entire repository
-    git clone https://github.com/giovanni214/day-night-shader.git
+First, clone the repository and switch to the `node` branch.
 
-    # Navigate into the new directory
-    cd day-night-shader
+```bash
+# Clone the entire repository
+git clone https://github.com/giovanni214/day-night-shader.git
 
-    # IMPORTANT: Switch to the Node.js version
-    git checkout node-day-night-shader
-    ```
+# Navigate into the new directory
+cd day-night-shader
 
-2.  **Install NPM packages:**
-    This will download Express, Sharp, and the native `gl` library.
-    ```bash
-    npm install
-    ```
+# IMPORTANT: Switch to the Node.js version
+git checkout node
+```
 
-3.  **Run the server:**
-    ```bash
-    node server.js
-    ```
-    By default, the server will start on `http://127.0.0.1:3000`.
+Next, install the required NPM packages.
 
----
+```bash
+npm install
+```
 
-## Docker Deployment
+### 3. Running the Server
 
-For a clean, portable deployment, you can use the included `Dockerfile`.
+Start the application from your terminal.
 
-1.  **Build the Docker image:**
-    From the root of the project directory, run:
-    ```bash
-    docker build -t day-night-shader .
-    ```
+```bash
+node server.js
+```
 
-2.  **Run the container:**
-    This command runs the server and maps your local port 3000 to the container's port 3000.
-    ```bash
-    docker run -p 3000:3000 -it day-night-shader
-    ```
+By default, the server will start and listen on `http://localhost:3000`.
 
----
+### 4. Using the API
 
-## API Usage
+Once the server is running, you can test the API endpoint. It accepts `lat` and `lon` as query parameters and returns a PNG image.
 
-The API exposes a single GET endpoint `/` that accepts two required query parameters: `lat` and `lon`.
-
--   `lat`: Latitude of the subsolar point (-90 to 90).
--   `lon`: Longitude of the subsolar point (-180 to 180).
-
-The server responds with a `image/png`.
-
-### Examples
-
-#### 1. Using a Web Browser
+#### **Example with a Web Browser:**
 
 Simply navigate to a URL with the desired coordinates.
 
@@ -105,7 +73,7 @@ Simply navigate to a URL with the desired coordinates.
 -   **Sun over New York City (approx. 40.7° N, 74° W):**
     `http://localhost:3000/?lat=40.7&lon=-74`
 
-#### 2. Using `curl`
+#### **Example with `curl`:**
 
 You can use a command-line tool like `curl` to fetch and save the image.
 
@@ -114,6 +82,31 @@ You can use a command-line tool like `curl` to fetch and save the image.
 curl "http://localhost:3000/?lat=35.7&lon=139.7" -o tokyo.png
 ```
 This will save the rendered image as `tokyo.png` in your current directory.
+
+---
+
+## Docker Deployment
+
+For a clean, portable deployment, you can use the included `Dockerfile`.
+
+> **Note on Headless Rendering:**
+> This version uses the `gl` package, which leverages native EGL for true headless rendering. Unlike the Rust/SFML version, it **does not** require a virtual display server like Xvfb.
+
+### 1. Build the Docker Image
+
+From the root of the project directory (on the `node` branch), run:
+
+```bash
+docker build -t day-night-shader-node .
+```
+
+### 2. Run the Container
+
+This command runs the server and maps your local port 3000 to the container's port 3000.
+
+```bash
+docker run --rm -it -p 3000:3000 day-night-shader-node
+```
 
 ---
 
@@ -132,10 +125,10 @@ You can customize the server's behavior by passing command-line arguments when r
 
 -   **Run on a different port and set a custom render width:**
     ```bash
-    docker run -p 8080:8080 -e PORT=8080 -it day-night-shader node server.js --width 2048
+    docker run -p 8080:8080 -e PORT=8080 -it day-night-shader-node node server.js --width 2048
     ```
 
 -   **Run with debug logging enabled:**
     ```bash
-    docker run -p 3000:3000 -it day-night-shader node server.js --debug
+    docker run -p 3000:3000 -it day-night-shader-node node server.js --debug
     ```
