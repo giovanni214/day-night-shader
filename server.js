@@ -25,7 +25,7 @@ const argv = yargs(hideBin(process.argv))
 	.option("w", {
 		alias: "width",
 		describe: "Width of the rendered image",
-		default: 1400,
+		default: 2048,
 		type: "number"
 	})
 	.option("d", {
