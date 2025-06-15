@@ -7,7 +7,7 @@
 This project provides a high-performance HTTP API that renders a world map with a day/night terminator line based on a given sun position (latitude and longitude). This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
 
 > **Looking for the original Rust/SFML version?**
-> This implementation is available on the [`main` branch](https://github.com/YOUR_USERNAME/YOUR_REPO/tree/main).
+> This implementation is available on the [main branch](https://github.com/YOUR_USERNAME/YOUR_REPO/tree/main).
 
 ---
 
@@ -44,13 +44,13 @@ Before you begin, you will need the following installed on your system:
 1.  **Clone the Node.js branch of the repository:**
     ```bash
     # Clone the entire repository
-    git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+    git clone [https://github.com/YOUR_USERNAME/YOUR_REPO.git](https://github.com/giovanni214/day-night-shader.git)
 
     # Navigate into the new directory
-    cd YOUR_REPO
+    cd day-night-shader
 
     # IMPORTANT: Switch to the Node.js version
-    git checkout node
+    git checkout node-day-night-shader
     ```
 
 2.  **Install NPM packages:**
