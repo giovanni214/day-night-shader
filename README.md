@@ -4,7 +4,14 @@
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)
 
-This project provides a high-performance HTTP API that renders a world map with a day/night terminator line based on a given sun position. This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
+This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
+
+This project is a backend service that provides a powerful image rendering API. It takes a latitude and longitude representing the subsolar point (where the sun is directly overhead) and uses a custom GLSL shader to render a high-quality equirectangular map of the Earth. The final image accurately visualizes the terminator line, separating day from night, and includes distinct lines for civil, nautical, and astronomical twilight.
+The application is architected for high-throughput and responsiveness by offloading all GPU-intensive rendering to a separate thread, ensuring the web server's event loop is never blocked.
+This repository contains two parallel, fully functional implementations, giving users a choice of technology stack:
+
+Rust Version (main branch): Built with Rust, Hyper, and SFML. It leverages Rust's performance and safety, using a virtual framebuffer (Xvfb) in Docker for headless rendering.
+Node.js Version (node branch): Built with Node.js, Express, and the gl library. It uses a worker thread and provides true headless rendering via native OpenGL/EGL without needing a virtual display.
 
 > **Looking for the original Rust/SFML version?**
 > This implementation is available on the [`rust` branch](https://github.com/giovanni214/day-night-shader/tree/rust).
