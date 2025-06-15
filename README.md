@@ -4,7 +4,7 @@
 
 This is the Rust/SFML implementation of the day/night shader service.
 
-**Looking for the Node.js version?** Check out the [node branch](https://github.com/giovanni214/day-night-shader/tree/node-day-night-shader).
+**Looking for the Node.js version?** Check out the [node branch](https://github.com/giovanni214/day-night-shader/tree/node).
 
 ---
 
