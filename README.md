@@ -8,9 +8,6 @@ This is the Rust/SFML implementation of the day/night shader service.
 
 ---
 
-## Installation (Rust)
-... (your existing Rust installation instructions) ...
-
 ### To Build and Install Locally
 Rust must be [installled.](https://www.rust-lang.org/tools/install)
 The SMFL dev library should also be installed. On Debian:
