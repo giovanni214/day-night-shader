@@ -44,7 +44,7 @@ Before you begin, you will need the following installed on your system:
 1.  **Clone the Node.js branch of the repository:**
     ```bash
     # Clone the entire repository
-    git clone [https://github.com/YOUR_USERNAME/YOUR_REPO.git](https://github.com/giovanni214/day-night-shader.git)
+    git clone https://github.com/giovanni214/day-night-shader.git
 
     # Navigate into the new directory
     cd day-night-shader
