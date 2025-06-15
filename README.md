@@ -7,7 +7,7 @@
 This project provides a high-performance HTTP API that renders a world map with a day/night terminator line based on a given sun position (latitude and longitude). This version is built with Node.js, Express, and uses native, headless OpenGL for GPU-accelerated rendering on a server.
 
 > **Looking for the original Rust/SFML version?**
-> This implementation is available on the [main branch](https://github.com/YOUR_USERNAME/YOUR_REPO/tree/main).
+> This implementation is available on the [main branch](https://github.com/giovanni214/day-night-shader/tree/rust).
 
 ---
 
