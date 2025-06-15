@@ -1,12 +1,6 @@
-#version 100
 precision mediump float;
 
 #define PI 3.141592653589793
-
-#define CIVIL_TWILIGHT 1.57079632679
-#define NAUTICAL_TWILIGHT 1.67551608191
-#define ASTRONOMICAL_TWILIGHT 1.78023583704
-#define NIGHT 1.88495559217
 
 uniform vec3 u_sun_dir;
 uniform vec2 u_resolution;
@@ -27,6 +21,11 @@ vec4 drawLine(vec4 inColor, float angle, float lineAngle, float angularWidth) {
 }
 
 void main() {
+    const float CIVIL_TWILIGHT = 1.57079632679;
+    const float NAUTICAL_TWILIGHT = 1.67551608191;
+    const float ASTRONOMICAL_TWILIGHT = 1.78023583704;
+    const float NIGHT = 1.88495559217;
+
     vec2 texCoord = gl_FragCoord.xy/u_resolution;
     vec4 mapColorDay = texture2D(u_map_day, texCoord);
     vec4 mapColorNight = texture2D(u_map_night, texCoord);
