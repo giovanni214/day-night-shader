@@ -11,7 +11,7 @@ vec2 reverseEquirectangular(vec2 pos) {
     float longitudePerPixel = 2.0 * PI / u_resolution.x;
     float latitudePerPixel = PI / u_resolution.y;
     float longitude = (pos.x - u_resolution.x * 0.5) * longitudePerPixel;
-    float latitude = (pos.y - u_resolution.y * 0.5) * latitudePerPixel;
+    float latitude = -(pos.y - u_resolution.y * 0.5) * latitudePerPixel;
     return vec2(longitude,latitude);
 }
 
