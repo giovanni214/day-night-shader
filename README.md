@@ -1,23 +1,41 @@
-# day-night-shader
+# Day/Night Shader (Node.js Version)
 
-### To Build and Install Locally
-Rust must be [installled.](https://www.rust-lang.org/tools/install)
-The SMFL dev library should also be installed. On Debian:
-```bash
-sudo apt-get install libsfml-dev git
-```
+This is the Node.js/Express/Headless-GL implementation of the day/night shader service.
 
-\
-To download and build the executable:
-```bash
-git clone https://github.com/giovanni214/day-night-shader.git
-cd day-night-shader
-cargo build --release --bin day-night-shader-native #this will take a while
-```
+**Looking for the original Rust/SFML version?** Check out the [`main` branch](https://github.com/YOUR_USERNAME/YOUR_REPO/tree/main).
 
-\
-Your executable will be located in `/target/release/day-night-shader-native`
-If you wish to install it locally:
-```bash
-cp /target/release/day-night-shader-native /usr/local/bin
-```
+---
+
+## Installation (Node.js)
+
+1.  **Prerequisites:**
+    *   Node.js (v20 or later recommended)
+    *   Build tools (`build-essential`, `pkg-config` on Linux)
+    *   System libraries for OpenGL: `sudo apt-get install libegl1-mesa-dev libgles2-mesa-dev python-is-python3`
+
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the Server:**
+    ```bash
+    node server.js
+    ```
+
+## Docker
+
+You can also run the application using Docker:
+
+1.  **Build the image:**
+    ```bash
+    docker build -t day-night-shader .
+    ```
+
+2.  **Run the container:**
+    ```bash
+    docker run -p 3000:3000 -it day-night-shader
+    ```
+
+---
+... (add API usage examples) ...
