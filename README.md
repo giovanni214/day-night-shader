@@ -36,8 +36,7 @@ Before you begin, you will need the following installed on your system:
         sudo apt-get update
         sudo apt-get install -y build-essential pkg-config python-is-python3
         ```
-    -   On macOS: Install the Xcode Command Line Tools.
-    -   On Windows: Install `windows-build-tools` via an administrator PowerShell: `npm install --global windows-build-tools`
+    -   Linux is only supported due to the use of the `gl` library
 
 ### Installation
 
