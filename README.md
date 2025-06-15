@@ -4,12 +4,21 @@
 ![SFML](https://img.shields.io/badge/SFML-2.5-8CC445?style=for-the-badge&logo=sfml)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)
 
-This is the original Rust/SFML implementation of the day/night shader service. It provides a high-performance HTTP API that renders a world map with a day/night terminator based on a given sun position.
+This is the original Rust/SFML implementation of the day/night shader service. 
+
+This project is a backend service that provides a powerful image rendering API. It takes a latitude and longitude representing the subsolar point (where the sun is directly overhead) and uses a custom GLSL shader to render a high-quality equirectangular map of the Earth. The final image accurately visualizes the terminator line, separating day from night, and includes distinct lines for civil, nautical, and astronomical twilight.
+The application is architected for high-throughput and responsiveness by offloading all GPU-intensive rendering to a separate thread, ensuring the web server's event loop is never blocked.
+This repository contains two parallel, fully functional implementations, giving users a choice of technology stack:
+
+Rust Version (main branch): Built with Rust, Hyper, and SFML. It leverages Rust's performance and safety, using a virtual framebuffer (Xvfb) in Docker for headless rendering.
+Node.js Version (node branch): Built with Node.js, Express, and the gl library. It uses a worker thread and provides true headless rendering via native OpenGL/EGL without needing a virtual display.
 
 > **Looking for the Node.js version?**
 > This implementation is available on the [`node` branch](https://github.com/giovanni214/day-night-shader/tree/node).
 
 ---
+
+
 
 ## Local Installation & Usage
 
