@@ -1,0 +1,29 @@
+{
+  "name": "day-night-shader",
+  "version": "1.0.0",
+  "description": "Rust must be [installled.](https://www.rust-lang.org/tools/install) The SMFL dev library should also be installed. On Debian: ```bash sudo apt-get install libsfml-dev git ```",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giovanni214/day-night-shader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/giovanni214/day-night-shader/issues"
+  },
+  "homepage": "https://github.com/giovanni214/day-night-shader#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "get-pixels": "^3.3.3",
+    "gl": "^8.1.6",
+    "sharp": "^0.34.2",
+    "yargs": "^18.0.0"
+  }
+}

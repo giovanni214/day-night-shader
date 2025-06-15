@@ -1,22 +1,19 @@
-FROM lukemathwalker/cargo-chef:latest-rust-slim-bookworm AS chef
-WORKDIR /day-night-shader
+# Dockerfile
+FROM node:20-bookworm-slim AS base
+WORKDIR /app
 
-FROM chef AS planner
+# Install build dependencies for gl and other native modules
+RUN apt-get update && apt-get install -y build-essential pkg-config libegl1-mesa-dev libgles2-mesa-dev && rm -rf /var/lib/apt/lists/*
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install --production
+
+# Copy the rest of the application code
 COPY . .
-RUN cargo chef prepare --recipe-path recipe.json
 
-FROM chef AS builder 
-RUN apt-get update && apt-get install libsfml-dev build-essential -y && rm -rf /var/lib/apt/lists/*
-COPY --from=planner /day-night-shader/recipe.json recipe.json
-# Build dependencies - this is the caching Docker layer!
-RUN cargo chef cook --release --recipe-path recipe.json
-# Build application
-COPY . .
-RUN cargo build --release --bin day-night-shader-native
+# Expose the port the server will run on
+EXPOSE 3000
 
-FROM debian:bookworm-slim AS runtime
-WORKDIR /day-night-shader
-RUN apt-get update && apt-get install libsfml-dev xvfb wget iproute2 -y && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /day-night-shader/target/release/day-night-shader-native /usr/local/bin
-COPY --from=builder /day-night-shader/docker-commands.sh /day-night-shader
-ENTRYPOINT ["sh", "/day-night-shader/docker-commands.sh"]
+# Define the command to run the application
+CMD ["node", "server.js", "--address", "0.0.0.0", "--port", "3000", "--width", "2048"]
