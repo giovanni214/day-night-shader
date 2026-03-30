@@ -1,11 +1,8 @@
-# Dockerfile
-
 # --- Stage 1: The Builder ---
-# This stage installs all build tools and compiles native dependencies.
 FROM node:20-bookworm-slim AS builder
 WORKDIR /app
 
-# Install system dependencies needed for the 'gl' package build
+# Install build dependencies for compiling the 'gl' package
 RUN apt-get update && apt-get install -y \
     build-essential \
     pkg-config \
@@ -14,38 +11,40 @@ RUN apt-get update && apt-get install -y \
     python-is-python3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy package files first to leverage Docker's layer caching
 COPY package*.json ./
-
-# Install all Node.js dependencies
 RUN npm install
 
-# Copy the rest of the application source code
+# Copy source code (respecting .dockerignore)
 COPY . .
 
-
 # --- Stage 2: The Runtime ---
-# This stage creates the final, smaller image for running the application.
 FROM node:20-bookworm-slim AS runtime
 WORKDIR /app
 
-# Install ONLY the runtime system dependencies needed by the 'gl' package.
+# Install runtime dependencies:
+# - libxext6, libxi6: Required for GL context linking
+# - xvfb, xauth: Required to create a virtual display
+# - libgl1, libgl1-mesa-dri: Software rasterizer for OpenGL
 RUN apt-get update && apt-get install -y \
     libegl1-mesa \
     libgles2-mesa \
+    libxext6 \
+    libxi6 \
+    libxrender1 \
+    xvfb \
+    xauth \
+    libgl1 \
+    libgl1-mesa-dri \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the pre-built node_modules and application code from the builder stage
+# Copy built node_modules and app from builder
 COPY --from=builder /app .
 
-# Set a default value for the PORT environment variable.
-# This can be overridden at runtime with `docker run -e PORT=...`
-ENV PORT 3000
-
-# Expose the port defined by the environment variable.
+ENV PORT=3000
 EXPOSE $PORT
 
-# Define the default command to run the application.
-# The server.js script will automatically pick up the $PORT environment variable.
-# Other arguments like --width or --debug can be appended to `docker run`.
-CMD ["node", "server.js"]
+# Start command:
+# 1. wraps execution in 'sh -c' to ensure proper signal handling
+# 2. Uses 'xvfb-run' to create a fake monitor
+# 3. Sets server-args to ensure 24-bit color depth (prevents visual errors)
+CMD ["sh", "-c", "xvfb-run -a --server-args='-screen 0 1024x768x24' node server.js"]
